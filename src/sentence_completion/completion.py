@@ -1,8 +1,13 @@
+from __future__ import annotations
+
+import typing
+
 import pydantic
 from torch.nn import functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from .models import CompletionConfig
+if typing.TYPE_CHECKING:
+    from .models import CompletionConfig
 
 
 class Completion(pydantic.BaseModel):

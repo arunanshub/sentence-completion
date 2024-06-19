@@ -65,7 +65,7 @@ extend-select = [
     "PERF", # perflint
     "FURB", # refurb
 ]
-extend-ignore = ["B024", "S101", "I002"]
+extend-ignore = ["B024", "S101"]
 
 # [tool.ruff.lint.per-file-ignores]
 # "tests/*" = ["S101"]
