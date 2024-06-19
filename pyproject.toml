@@ -1,0 +1,82 @@
+[tool.poetry]
+name = "sentence-completion"
+version = "0.0.0"
+description = ""
+authors = ["Arunanshu Biswas <mydellpc07@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+transformers = ">=4.41.2"
+fastapi = ">=0.111.0"
+accelerate = ">=0.31.0"
+pydantic = ">=2.7.4"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.4.9"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "pep440"
+bump = true
+
+[tool.poetry-dynamic-versioning.files."src/sentence_completion/_version.py"]
+persistent-substitution = true
+initial-content = """
+# this file is auto @generated
+
+__version__ = "0.0.0"
+"""
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+# ================== Other tools =====================
+[tool.ruff]
+# line-length = 80
+target-version = "py310"
+output-format = 'grouped'
+
+[tool.ruff.lint]
+preview = true
+extend-select = [
+    "A",    # builtins
+    "B",    # bugbear
+    "S",    # bandit
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "Q",    # quotes
+    "W",    # pycodestyle warnings
+    "I",    # isort
+    "EM",   # errmsgs
+    "UP",   # pyupgrade
+    "C4",   # comprehensions
+    "PT",   # pytest
+    "RET",  # return
+    "C90",  # mccabe
+    "ARG",  # unused arguments
+    "TCH",  # type checking
+    "SIM",  # flake8-simplify
+    "PIE",  # flake8-pie
+    "TID",  # tidy imports
+    "ICN",  # import conventions
+    "RSE",  # flake8-raise
+    "FLY",  # flynt
+    "RUF",  # ruff specific rules
+    "TRY",  # tryceratops
+    "PERF", # perflint
+    "FURB", # refurb
+]
+extend-ignore = ["B024", "S101", "I002"]
+
+# [tool.ruff.lint.per-file-ignores]
+# "tests/*" = ["S101"]
+
+[tool.ruff.lint.isort]
+required-imports = ["from __future__ import annotations"]
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
