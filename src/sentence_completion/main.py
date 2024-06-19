@@ -5,7 +5,7 @@ from fastapi import Depends, FastAPI
 from fastapi.concurrency import run_in_threadpool
 
 from .completion import Completion, SentenceCompletion
-from .models import CompletionConfig, CompletionIn
+from .models import CompletionConfig
 
 app = FastAPI()
 
@@ -30,11 +30,10 @@ def read_root():
 @app.post("/completion")
 async def complete_sentence(
     model: ModelDep,
-    user_input: CompletionIn,
-    config: CompletionConfig,
+    sentence: str,
+    config: CompletionConfig | None = None,
 ) -> list[Completion]:
-    return await run_in_threadpool(
-        model.complete_with_scores,
-        user_input.sentence,
-        config,
-    )
+    if config is None:
+        config = CompletionConfig()
+
+    return await run_in_threadpool(model.complete_with_scores, sentence, config)

@@ -32,6 +32,7 @@ class SentenceCompletion:
             return_dict_in_generate=True,
             output_scores=True,
             pad_token_id=self._tokenizer.eos_token_id,
+            min_new_tokens=config.max_new_tokens,
             **config.model_dump(),
         )
 
