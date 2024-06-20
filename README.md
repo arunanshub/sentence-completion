@@ -6,4 +6,4 @@
 
 2. Build the docker image: `docker build . -t sentence-completion:latest`
 
-3. Launch the image: `docker run -t --rm --runtime nvidia --gpus all -p 8000:8000 scomp`
+3. Launch the image: `docker run -t --rm --runtime nvidia --gpus all -p 8000:8000 sentence-completion:latest`
