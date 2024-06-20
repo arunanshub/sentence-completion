@@ -12,8 +12,14 @@ transformers = ">=4.41.2"
 fastapi = ">=0.111.0"
 accelerate = ">=0.31.0"
 pydantic = ">=2.7.4"
-torch = { version = ">=2.3.1+cu121", platform = "win32", source = "pytorch" }
-numpy = { version = "<2", platform = "win32" }
+torch = [
+    { version = ">=2.3.1+cu121", platform = "win32", source = "pytorch" },
+    { version = ">=2.3.1", platform = "!=win32", source = "pypi" },
+]
+numpy = [
+    { version = "<2", platform = "win32" },
+    { version = ">=2", platform = "!=win32" },
+]
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.4.9"
@@ -21,7 +27,7 @@ ruff = "^0.4.9"
 [[tool.poetry.source]]
 name = "pytorch"
 url = "https://download.pytorch.org/whl/cu121"
-priority = "supplemental"
+priority = "explicit"
 
 [tool.poetry-dynamic-versioning]
 enable = true
