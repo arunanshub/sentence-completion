@@ -29,6 +29,11 @@ def read_root():
     return "working"
 
 
+@app.get("/_health")
+def health():
+    return "ok"
+
+
 @app.post("/completion")
 async def complete_sentence(
     model: ModelDep,
