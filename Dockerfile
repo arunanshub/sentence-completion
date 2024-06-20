@@ -12,8 +12,7 @@ ENV PYTHONUNBUFFERED=1 \
 
 RUN apt-get update \
     && apt-get install -y curl \
-    && curl -sSL https://install.python-poetry.org | python3 - \
-    && poetry self add "poetry-dynamic-versioning[plugin]"
+    && curl -sSL https://install.python-poetry.org | python3 -
 
 COPY poetry.lock pyproject.toml README.md ./
 
@@ -33,4 +32,4 @@ COPY --from=builder /app .
 
 EXPOSE 8000
 
-ENTRYPOINT ["fastapi", "run", "src/sentence_completion/main.py"]
+CMD ["fastapi", "run", "src/sentence_completion/main.py"]
