@@ -30,7 +30,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y curl
 
 ENV VIRTUAL_ENV=/app/.venv \
-    PATH="/app/.venv/bin:$PATH"
+    PATH="/app/.venv/bin:$PATH" \
+    HF_HUB_CACHE="/app/.cache/huggingface/hub"
 
 COPY --from=builder /app .
 
