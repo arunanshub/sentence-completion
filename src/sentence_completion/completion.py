@@ -19,8 +19,10 @@ class SentenceCompletion:
     def __init__(
         self,
     ) -> None:
-        self._model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2").to(
-            "cuda:0"
+        self._model = AutoModelForCausalLM.from_pretrained(
+            "distilbert/distilgpt2",
+            # load directly on gpu using accelerate
+            device_map="cuda",
         )
         self._tokenizer = AutoTokenizer.from_pretrained("distilbert/distilgpt2")
 
