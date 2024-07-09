@@ -15,15 +15,17 @@ readme = "README.md"
 license = { text = "MIT" }
 dynamic = ["version"]
 
-[tool.pdm.dev-dependencies]
-dev = ["ruff>=0.5.1"]
-
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff>=0.5.1",
+]
 
 [[tool.pdm.source]]
 name = "pytorch"
@@ -40,7 +42,7 @@ write_template = '''
 
 __version__ = "{}"
 '''
-fallback_version = "0.0.0"  # required when building in docker
+fallback_version = "0.0.0" # required when building in docker
 
 [tool.ruff]
 # line-length = 80
