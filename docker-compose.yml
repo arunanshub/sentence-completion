@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./volumes/app:/app/.cache:ro
+    depends_on:
+      - db
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USERNAME: postgres
+    volumes:
+      - ./volumes/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  dbadmin:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
