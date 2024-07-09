@@ -1,3 +1,6 @@
+# docker volumes
+volumes/
+
 # version file
 **/_version.py
 
