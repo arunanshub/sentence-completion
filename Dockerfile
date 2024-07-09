@@ -5,21 +5,16 @@ WORKDIR /app
 ARG APP_VERSION
 
 ENV PYTHONUNBUFFERED=1 \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    POETRY_NO_INTERACTION=1 \
-    PATH="${PATH}:/root/.local/bin/" \
-    # disable dynamic versioning commands (see
-    # https://github.com/mtkennerly/poetry-dynamic-versioning?tab=readme-ov-file#environment-variables)
-    POETRY_DYNAMIC_VERSIONING_BYPASS=${APP_VERSION}
+    PATH="${PATH}:/root/.local/bin/"
 
 RUN apt-get update \
     && apt-get install -y curl \
-    && curl -sSL https://install.python-poetry.org | python3 -
+    && curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 
-COPY poetry.lock pyproject.toml README.md ./
+COPY pdm.lock pyproject.toml README.md ./
 
 # install the dependencies first...
-RUN --mount=type=cache,target=/root/.cache poetry install --without dev --no-plugins
+RUN --mount=type=cache,target=/root/.cache pdm install --prod
 
 COPY . .
 
