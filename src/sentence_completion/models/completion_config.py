@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from uuid import UUID  # noqa: TCH003
 
+from pydantic import BaseModel
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, MappedColumn, mapped_column, relationship
 from uuid_utils import uuid7
@@ -50,3 +51,18 @@ class CompletionConfig(Base):
         back_populates="completion_config",
         init=False,
     )
+
+
+class CompletionConfigIn(BaseModel):
+    """
+    The model for completion configuration that is used by FastAPI. For info on
+    the fields, see `CompletionConfig`.
+    """
+
+    top_k: int = 50
+    top_p: float = 0.7
+    early_stopping: bool = True
+    num_return_sequences: int = 5
+    num_beams: int = 10
+    no_repeat_ngram_size: int = 2
+    max_new_tokens: int = 5

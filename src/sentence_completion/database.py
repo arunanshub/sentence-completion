@@ -4,6 +4,7 @@ import typing
 from functools import cache
 from typing import TYPE_CHECKING
 
+import orjson
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, create_async_engine
 
@@ -21,6 +22,8 @@ def get_engine() -> AsyncEngine:
     return create_async_engine(
         settings.database_url.unicode_string(),
         pool_pre_ping=True,
+        json_serializer=lambda obj: orjson.dumps(obj).decode(),
+        json_deserializer=orjson.loads,
     )
 
 
