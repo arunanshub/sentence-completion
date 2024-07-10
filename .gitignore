@@ -1,5 +1,11 @@
+# docker volumes
+volumes/
+
 # version file
 **/_version.py
+
+# ruff
+.ruff_cache/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

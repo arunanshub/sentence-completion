@@ -1,6 +1,15 @@
 .gitignore
 .git/
 Dockerfile
+.env
+migrations/
+.ruff_cache/
+renovate.json
+alembic.ini
+tests/
+
+# docker volume folder
+volumes/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

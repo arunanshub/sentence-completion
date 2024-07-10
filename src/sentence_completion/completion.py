@@ -2,17 +2,13 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 from torch.nn import functional as F
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+from .models import ModelCompletion
+
 if typing.TYPE_CHECKING:
-    from .models import CompletionConfig
-
-
-class Completion(pydantic.BaseModel):
-    sentence: str
-    probability: list[float]
+    from .models import CompletionConfigIn
 
 
 class SentenceCompletion:
@@ -29,8 +25,8 @@ class SentenceCompletion:
     def complete_with_scores(
         self,
         sentence: str,
-        config: CompletionConfig,
-    ) -> list[Completion]:
+        config: CompletionConfigIn,
+    ) -> list[ModelCompletion]:
         inputs = self._tokenizer([sentence], return_tensors="pt").to("cuda:0")
 
         outputs = self._model.generate(
@@ -61,7 +57,7 @@ class SentenceCompletion:
                 clean_up_tokenization_spaces=True,
             )
             completions.append(
-                Completion(
+                ModelCompletion(
                     sentence=completed_sentence.split(sentence)[-1].strip(),
                     probability=probability.tolist(),
                 )
