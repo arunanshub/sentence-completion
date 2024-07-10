@@ -6,6 +6,9 @@ from functools import lru_cache
 from fastapi import Depends, FastAPI
 from fastapi.concurrency import run_in_threadpool
 
+from sentence_completion.database import AsyncSessionDep
+from sentence_completion.models import completion_config
+
 from .completion import Completion, SentenceCompletion
 from .models import CompletionConfig
 
@@ -32,6 +35,14 @@ def read_root():
 @app.get("/_health")
 def health():
     return "ok"
+
+
+@app.post("/foo")
+async def foo(db: AsyncSessionDep, x: int) -> str:
+    c = completion_config.CompletionConfig(x)
+    db.add(c)
+    await db.commit()
+    return str(c.id)
 
 
 @app.post("/completion")
