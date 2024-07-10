@@ -24,12 +24,25 @@ services:
       POSTGRES_USERNAME: postgres
     volumes:
       - ./volumes/db:/var/lib/postgresql/data
+
+  # A server side connection pooler for postgres. Improves performance.
+  pgbouncer:
+    image: edoburu/pgbouncer
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_HOST: db
+      AUTH_TYPE: scram-sha-256
+      # cannot use `transaction` mode yet because it conflicts with sqlalchemy/asyncpg
+      # POOL_MODE: transaction
     ports:
       - 5432:5432
+    depends_on:
+      - db
 
   dbadmin:
     image: adminer
     ports:
       - 8080:8080
     depends_on:
-      - db
+      - pgbouncer
