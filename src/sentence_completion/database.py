@@ -28,7 +28,10 @@ async def get_db() -> AsyncIterable[AsyncSession]:
     """
     Get an instance of the database session suitable for use with FastAPI.
     """
-    async with AsyncSession(get_engine(), expire_on_commit=False) as session:
+    async with (
+        AsyncSession(get_engine(), expire_on_commit=False) as session,
+        session.begin(),  # allow autocommit feature
+    ):
         yield session
 
 
