@@ -8,7 +8,10 @@ services:
     volumes:
       - ./volumes/app:/app/.cache:ro
     depends_on:
-      - db
+      - pgbouncer
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:password@pgbouncer:5432/
+    restart: always
     deploy:
       resources:
         reservations:
